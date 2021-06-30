@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  title: MAIN API
+  description: MAIN API.
+  version: 0.0.1
+paths:
+  /login:
+    post:
+      description: Login to the application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                  format: password
+              example:
+                email: andriy@tealbook.com
+                password: password
+      responses:
+        401:
+          description: Authorization information is missing or invalid.
+        500:
+          description: Unexpected error.
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jwt:
+                    type: string
+                example:
+                  jwt: "Bearer JWT"
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+     - bearerAuth: []
