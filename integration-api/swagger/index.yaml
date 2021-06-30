@@ -1,0 +1,40 @@
+openapi: 3.0.0
+info:
+  title: Integration API
+  description: Integration API.
+  version: 0.0.1
+paths:
+  /cities:
+    post:
+      description: Uploads cities file.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: string
+                  format: binary
+        responses:
+         '200':
+           description: OK
+         '409':
+          description: Server wasn't able to proceed request, see response error for details.
+  /climate:
+    post:
+      description: Uploads climate file.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: string
+                  format: binary
+        responses:
+         '200':
+           description: OK
+         '409':
+          description: Server wasn't able to proceed request, see response error for details.
