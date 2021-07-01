@@ -28,6 +28,9 @@
         "404": {
             "message": "Record not found"
         },
+        "901": {
+            "message": "Payload is invalid"
+        },
         "default": {
             "code": "1001"
         },

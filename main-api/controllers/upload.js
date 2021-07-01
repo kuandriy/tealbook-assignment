@@ -19,6 +19,8 @@ class Service {
       db_index = db_index_climate;
       data = req.body.climate;
     }
+    //Prepare data for bulk load
+    data  = data.flatMap(doc => [{ index: { _index:  db_index} }, doc]);
     try {
       await this.db.bulk({
         index: `${db_index}`,

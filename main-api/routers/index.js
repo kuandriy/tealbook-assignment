@@ -15,6 +15,7 @@ module.exports = function (server) {
     server.route('/login').post(UserController.login);
     server.route('/upload/cities').post(UploadController.upload);
     server.route('/upload/climate').post(UploadController.upload);
+    server.route('/climate/:date').get(ClimateController.climateByDate);
     // API Swagger setup
     server.use('/api-docs', swaggerUi.serve);
     server.route('/api-docs').get(swaggerUi.setup(swaggerDocument));
