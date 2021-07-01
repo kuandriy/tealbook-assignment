@@ -88,22 +88,37 @@ class Service {
     try {
       const urbanCitiesGeoData = await this.db.search(urbanAriaQuery);
       // Calculate average temperature on selected date for urban Canadian cities
+
+      // ! Need add geo filter to query
+      // =====================================================================================
+      // Idea is to find all results for a date provided by user input and geo locations that 
+      // Collected from urbanAriaQuery
+      // something like:
+      //  "geo_distance": {
+      //    "distance": "12km",
+      //    "pin.location": [ -70, 40 ]
+      //  }
+      // The thing that geo points in urbanAriaQuery is an array 
+      // Will need to educate my self on best approach 
+
       const temperatureQuery = {
         index: db_index_climate,
         body: {
-            aggs: {
-              mean: { avg: { field: "MEAN_TEMPERATURE" } },
+          query: {
+            bool: {
+              must: [
+                { match: { LOCAL_DATE: `${moment(data.date).toISOString()}` } }
+              ],
             },
-            filter: {
-              // That is should be changed to query without time zone
-              term: { LOCAL_DATE: moment(data.date).toISOString() },
-            },
-        },
-      };
-
+          },
+          aggs: {
+            mean: { avg: { field: "MEAN_TEMPERATURE" } },
+            median: { median_absolute_deviation: { field: "MEAN_TEMPERATURE" }}
+        }
+      }
+    };
       const result = await this.db.search(temperatureQuery);
-      console.log("here");
-      console.log(result.body.aggregations.mean);
+      return AppEvents.emit('success', req, res, result.body.aggregations);
     } catch (error) {
       if (error.meta && error.meta.body) {
         error = error.meta.body;
