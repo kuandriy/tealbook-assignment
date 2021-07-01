@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: MAIN API
+  description: MAIN API.
+  version: 0.0.1
+paths:
+  /login:
+    post:
+      description: Login to the application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                  format: password
+              example:
+                email: andriy@tealbook.com
+                password: password
+      responses:
+        401:
+          description: Authorization information is missing or invalid.
+        500:
+          description: Unexpected error.
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jwt:
+                    type: string
+                example:
+                  jwt: "Bearer JWT"
+  /climate/{date}:
+    get:
+      description: computes the mean and median temperature for Canadians daytime temperature
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type : string
+            description: "Date in ISO format"
+      responses:
+        401:
+          description: Authorization information is missing or invalid.
+        500:
+          description: Unexpected error.
+        409:
+          description: Server was not able to proceed request, please see Error json for details.
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mean:
+                    type: number
+                    description: "the mean temperature"
+                  median:
+                    type: number
+                    description: "the median temperature"
+                example:
+                  mean: 18.3
+                  median: 21.6
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+     - bearerAuth: []

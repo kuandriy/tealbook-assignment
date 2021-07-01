@@ -1,0 +1,45 @@
+{
+    "auth": {
+        "options": {
+            "validValue": 9,
+            "validUnits": "hours",
+            "tokenPrefix": "Bearer "
+        },
+        "error": {
+            "UnauthorizedError": "Authentication credentials are missing or invalid."
+        }
+    },
+    "errors": {
+        "201": {
+            "message": "Can't connect to DB"
+        },
+        "202": {
+            "message": "Can't insert in DB"
+        },
+        "203": {
+            "message": "Invalid user name or password"
+        },
+        "204": {
+            "message": "Db query error"
+        },
+        "205": {
+            "message": "No data available for provided date"
+        },
+        "404": {
+            "message": "Record not found"
+        },
+        "901": {
+            "message": "Payload is invalid"
+        },
+        "default": {
+            "code": "1001"
+        },
+        "1001": {
+            "message": "",
+            "details": ""
+        }
+    },
+    "token": {
+        "expire": 48
+    }
+}
